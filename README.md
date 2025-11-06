@@ -4,10 +4,12 @@
 
 ## 🎯 项目特点
 
-- **纯前端演示**: 无需后端服务，开箱即用
+- **纯前端演示**: 需配合后端服务，(https://github.com/wjwdive/FreeBackend)
 - **现代化技术栈**: Vue3 + Pinia + Vant
 - **移动端优先**: 响应式设计，完美适配移动设备
 - **演示模式**: 模拟用户注册/登录流程
+- **后端** localhost:3001/
+- **前端** localhost:3000/
 
 ## 🛠 技术栈
 
@@ -109,3 +111,8 @@ npm run build
 - 本项目为纯前端演示，所有数据存储在浏览器本地
 - 刷新页面或清除缓存后数据会重置
 - 如需连接真实后端服务，可参考原始代码结构进行扩展
+
+## 📄 许可证
+    MIT License
+     Copyright (c) 2025 wjwdive
+     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
