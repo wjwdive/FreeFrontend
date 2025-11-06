@@ -35,6 +35,17 @@
         >
           登录
         </van-button>
+        
+        <van-button 
+          round 
+          block 
+          type="default" 
+          style="margin-top: 12px;"
+          @click="skipLogin"
+          plain
+        >
+          暂不登录
+        </van-button>
       </div>
     </van-form>
     
@@ -88,7 +99,9 @@ export default {
         if (response.statusCode === 200 && response.data) {
           // 格式1: { success: true, data: { token, user } }
           const { token, user } = response.data
-          
+          //清除旧的token和用户信息
+          userStore.clearUserInfo()
+
           // 保存token和用户信息
           userStore.setToken(token)
           userStore.setUserInfo(user)
@@ -116,11 +129,31 @@ export default {
       router.push('/register')
     }
     
+    const skipLogin = () => {
+      showSuccessToast('以游客身份进入')
+      console.log('准备以游客身份跳转到首页')
+      
+      // 直接使用路径跳转，避免路由名称解析问题
+      console.log('直接跳转到 /main/home')
+      
+      // 使用Promise确保跳转完成
+      router.push('/main/home').then(() => {
+        console.log('路由跳转成功，当前路由:', router.currentRoute.value)
+      }).catch((error) => {
+        console.error('路由跳转失败:', error)
+        
+        // 如果Vue Router跳转失败，尝试使用原生跳转
+        console.log('尝试使用原生跳转')
+        window.location.href = '/main/home'
+      })
+    }
+    
     return {
       loginForm,
       loading,
       onSubmit,
-      goToRegister
+      goToRegister,
+      skipLogin
     }
   }
 }

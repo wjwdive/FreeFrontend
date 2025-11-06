@@ -225,13 +225,8 @@ export default {
     }
     
     onMounted(() => {
-      // 如果没有登录信息，跳转到登录页
-      if (!userStore.isLoggedIn()) {
-        router.push('/login')
-      } else {
-        // 初始化加载数据
-        loadData(true)
-      }
+      // 初始化加载数据，允许游客访问首页
+      loadData(true)
     })
     
     return {
