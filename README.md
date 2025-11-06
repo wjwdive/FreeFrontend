@@ -1,7 +1,7 @@
 # Free Frontend
 
 基于 Vue3 + Pinia + Vant + JavaScript 的纯前端演示项目
-
+![alt text](image.png)![alt text](image-1.png)
 ## 🎯 项目特点
 
 - **纯前端演示**: 需配合后端服务，(https://github.com/wjwdive/FreeBackend)
