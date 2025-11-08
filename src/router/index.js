@@ -7,6 +7,7 @@ import Discover from '@/views/Discover.vue'
 import Profile from '@/views/Profile.vue'
 import MainLayout from '@/views/MainLayout.vue'
 import ConnectionTest from '@/views/ConnectionTest.vue'
+import Message from '@/views/Message.vue'
 
 const routes = [
   {
@@ -65,6 +66,14 @@ const routes = [
         component: Profile,
         meta: {
           requiresAuth: true
+        }
+      },
+      {
+        path: 'message',
+        name: 'Message',
+        component: Message,
+        meta: {
+          requiresAuth: false
         }
       }
     ]

@@ -15,6 +15,13 @@
         首页
       </van-tabbar-item>
       <van-tabbar-item 
+        name="discover" 
+        icon="search"
+        @click="navigateTo('discover')"
+      >
+        发现
+      </van-tabbar-item>
+      <van-tabbar-item 
         name="hot" 
         icon="fire-o"
         @click="navigateTo('hot')"
@@ -22,11 +29,12 @@
         热点
       </van-tabbar-item>
       <van-tabbar-item 
-        name="discover" 
-        icon="search"
-        @click="navigateTo('discover')"
+        name="message" 
+        icon="chat-o"
+        :badge="unreadCount > 0 ? unreadCount : ''"
+        @click="navigateTo('message')"
       >
-        发现
+        消息
       </van-tabbar-item>
       <van-tabbar-item 
         name="profile" 
@@ -40,7 +48,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 export default {
@@ -53,9 +61,21 @@ export default {
     // 当前激活的tab，默认为首页
     const activeTab = ref('home')
     
+    // 未读消息数量（在实际项目中应该从全局状态管理或API获取）
+    const unreadCount = ref(3) // 初始设置为3条未读消息
+    
+    // 监听路由变化，当进入消息页面时更新未读数量
+    watch(() => route.path, (newPath) => {
+      if (newPath === '/main/message') {
+        // 进入消息页面，清空未读数量
+        unreadCount.value = 0
+      }
+    })
+    
     // 路由到tab页面的映射
     const routeToTabMap = {
       '/main/home': 'home',
+      '/main/message': 'message',
       '/main/hot': 'hot',
       '/main/discover': 'discover',
       '/main/profile': 'profile'
@@ -73,6 +93,7 @@ export default {
     const navigateTo = (tabName) => {
       const routeMap = {
         'home': '/main/home',
+        'message': '/main/message',
         'hot': '/main/hot',
         'discover': '/main/discover',
         'profile': '/main/profile'
@@ -85,6 +106,7 @@ export default {
     
     return {
       activeTab,
+      unreadCount,
       navigateTo
     }
   }
