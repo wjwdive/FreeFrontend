@@ -8,6 +8,7 @@ import Profile from '@/views/Profile.vue'
 import MainLayout from '@/views/MainLayout.vue'
 import ConnectionTest from '@/views/ConnectionTest.vue'
 import Message from '@/views/Message.vue'
+import Chat from '@/views/Chat.vue'
 
 const routes = [
   {
@@ -82,6 +83,14 @@ const routes = [
     path: '/connection-test',
     name: 'ConnectionTest',
     component: ConnectionTest
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat,
+    meta: {
+      requiresAuth: false
+    }
   }
 ]
 

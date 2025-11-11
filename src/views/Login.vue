@@ -96,26 +96,54 @@ export default {
         console.log('登录API响应:', response)
         
         // 登录成功处理 - 适配不同的响应格式
-        if (response.statusCode === 200 && response.data) {
-          // 格式1: { success: true, data: { token, user } }
-          const { token, user } = response.data
-          //清除旧的token和用户信息
-          userStore.clearUserInfo()
-
-          // 保存token和用户信息
-          userStore.setToken(token)
-          userStore.setUserInfo(user)
-          
-          showSuccessToast('登录成功')
-          console.log('准备跳转到 /main/home')
-          router.push('/main/home').then(() => {
-            console.log('路由跳转成功')
-          }).catch((error) => {
-            console.error('路由跳转失败:', error)
-          })
-        } else {
-          showFailToast(response.message || '登录失败')
+        console.log('🔍 登录API响应结构:', response)
+        
+        let token = ''
+        let user = {}
+        
+        // 格式1: 包含data字段 { data: { token, user } }（后端实际返回格式）
+        if (response.data && response.data.token) {
+          token = response.data.token
+          user = response.data.user || {}
         }
+        // 格式2: 直接返回 { token, user }
+        else if (response.token) {
+          token = response.token
+          user = response.user || {}
+        }
+        // 格式3: 包含success字段 { success: true, data: { token, user } }
+        else if (response.success && response.data && response.data.token) {
+          token = response.data.token
+          user = response.data.user || {}
+        }
+        // 格式4: 包含statusCode字段 { statusCode: 200, data: { token, user } }
+        else if (response.statusCode === 200 && response.data && response.data.token) {
+          token = response.data.token
+          user = response.data.user || {}
+        }
+        
+        // 检查token是否存在
+        if (!token) {
+          console.error('❌ 未找到token，响应结构:', response)
+          showFailToast('登录失败：未获取到token')
+          return
+        }
+        
+        // 清除旧的token和用户信息
+        userStore.clearUserInfo()
+
+        // 保存token和用户信息
+        userStore.setToken(token)
+        userStore.setUserInfo(user)
+        
+        console.log('✅ 登录成功，用户信息:', user)
+        showSuccessToast('登录成功')
+        console.log('准备跳转到 /main/home')
+        router.push('/main/home').then(() => {
+          console.log('路由跳转成功')
+        }).catch((error) => {
+          console.error('路由跳转失败:', error)
+        })
       } catch (error) {
         // 错误处理
         console.error('登录错误:', error)

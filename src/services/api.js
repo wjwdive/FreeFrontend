@@ -69,4 +69,16 @@ export const authAPI = {
   getUserInfo: () => api.get('/api/auth/userinfo')
 }
 
+// 用户相关API
+export const userAPI = {
+  // 搜索用户
+  searchUsers: (keyword) => api.post('/api/users/search', { keyword }),
+  
+  // 获取用户列表
+  getUsers: (params) => api.get('/api/users', { params }),
+  
+  // 获取用户详情
+  getUserById: (id) => api.get(`/api/users/${id}`)
+}
+
 export default api
